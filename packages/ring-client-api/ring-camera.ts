@@ -577,6 +577,7 @@ export class RingCamera extends Subscribed {
           accept: 'image/jpeg',
         },
         allowNoResponse: true,
+        timeout: { request: maxWaitMs + 1000 }
       }),
       { responseTimestamp, timeMillis } = response,
       timestampAge = Math.abs(responseTimestamp - timeMillis)
