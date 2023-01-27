@@ -1,1 +1,7 @@
-module.exports = require('./packages/eslint-config-shared/eslint-config-shared.js')
+module.exports = {
+  root: true,
+  extends: ['shared'],
+  parserOptions: {
+    project: 'tsconfig.eslint.json',
+  },
+}

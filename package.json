@@ -1,36 +1,86 @@
 {
-  "name": "ring",
-  "private": true,
+  "name": "ring-client-api",
+  "version": "11.7.1",
+  "description": "Unofficial API for Ring doorbells, cameras, security alarm system and smart lighting",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./ffmpeg": "./lib/ffmpeg.js",
+    "./util": "./lib/util.js",
+    "./rest-client": "./lib/rest-client.js"
+  },
   "scripts": {
-    "build": "turbo run build",
-    "dev": "npm run build && turbo run dev --parallel",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "version": "changeset version && npm i",
-    "test:watch": "npm run test:watch -w ring-client-api",
-    "example": "DEBUG=ring node -r @swc-node/register ./packages/examples/example.ts",
-    "api-example": "DEBUG=ring node -r @swc-node/register ./packages/examples/api-example.ts",
-    "record-example": "DEBUG=ring node -r @swc-node/register ./packages/examples/record-example.ts",
-    "return-audio-example": "DEBUG=ring node -r @swc-node/register ./packages/examples/return-audio-example.ts",
-    "stream-example": "DEBUG=ring node -r @swc-node/register ./packages/examples/stream-example.ts",
-    "browser-example": "DEBUG=ring node -r @swc-node/register ./packages/examples/browser-example.ts",
-    "auth-cli": "turbo build --filter=ring-client-api && ./packages/ring-client-api/lib/ring-auth-cli.js",
-    "device-data-cli": "turbo build --filter=ring-client-api && ./packages/ring-client-api/lib/ring-device-data-cli.js",
-    "push-with-tags": "git push --follow-tags",
-    "predeploy": "git pull -r && turbo run build test lint",
-    "postdeploy": "npm run push-with-tags",
-    "deploy": "changeset version && git commit -am 'Bump versions for release' && changeset publish",
-    "release": "turbo run build test lint && changeset publish",
-    "prepare-beta": "changeset pre enter beta && git add .changeset/pre.json && git commit -am 'Prepare for beta release'",
-    "exit-beta": "changeset pre exit && commit -am 'Exit beta release'"
+    "build": "rm -rf lib && tsc --declaration && chmod +x ./lib/ring-*-cli.js",
+    "dev": "tsc --declaration --watch --preserveWatchOutput",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@eneris/push-receiver": "^3.1.4",
+    "@homebridge/camera-utils": "^2.2.0",
+    "werift": "0.17.5",
+    "@types/socket.io-client": "1.4.36",
+    "colors": "1.4.0",
+    "debug": "^4.3.4",
+    "got": "^11.8.5",
+    "rxjs": "^7.8.0",
+    "socket.io-client": "^2.5.0",
+    "systeminformation": "^5.16.9",
+    "uuid": "^9.0.0",
+    "ws": "^8.11.0"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.8",
-    "@changesets/cli": "^2.26.0",
-    "@swc-node/register": "^1.5.4",
-    "turbo": "^1.6.3"
+    "@types/debug": "4.1.7",
+    "@types/jest": "29.2.4",
+    "@types/node": "18.11.17",
+    "@types/uuid": "9.0.0",
+    "@types/ws": "^8.5.3",
+    "jest": "29.3.1",
+    "ts-jest": "29.0.3",
+    "typescript": "4.9.4"
   },
-  "workspaces": [
-    "packages/*"
+  "engines": {
+    "node": "^16 || ^18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dgreif/ring.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dgreif/ring/issues"
+  },
+  "homepage": "https://github.com/dgreif/ring/tree/main/packages/ring-client-api#ring-client-api",
+  "author": "dgreif",
+  "license": "MIT",
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.me/dustingreif"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/dgreif"
+    }
+  ],
+  "bin": {
+    "ring-auth-cli": "lib/ring-auth-cli.js",
+    "ring-device-data-cli": "lib/ring-device-data-cli.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "ring",
+    "doorbell",
+    "doorbot",
+    "camera",
+    "alarm",
+    "smart",
+    "light",
+    "beam",
+    "security",
+    "client",
+    "api"
   ]
 }
